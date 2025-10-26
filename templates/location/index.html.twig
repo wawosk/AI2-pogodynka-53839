@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Location index{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Location index</h1>
+        <div>
+            <a href="{{ path('app_measurement_index') }}" class="btn btn-info">Go to Measurements</a>
+            <a href="{{ path('app_location_new') }}" class="btn btn-success">Create new Location</a>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Id</th>
+            <th>City</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Country</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for location in locations %}
+            <tr>
+                <td>{{ location.id }}</td>
+                <td>{{ location.city }}</td>
+                <td>{{ location.latitude }}</td>
+                <td>{{ location.longitude }}</td>
+                <td>{{ location.country }}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="{{ path('app_location_show', {'id': location.id}) }}" class="btn btn-sm btn-outline-primary">show</a>
+                        <a href="{{ path('app_location_edit', {'id': location.id}) }}" class="btn btn-sm btn-outline-secondary">edit</a>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="text-center">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-3">
+        <a href="{{ path('app_measurement_index') }}" class="btn btn-info">Go to Measurements</a>
+        <a href="{{ path('app_location_new') }}" class="btn btn-success">Create new Location</a>
+    </div>
+{% endblock %}

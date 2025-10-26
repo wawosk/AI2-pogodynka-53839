@@ -1,0 +1,102 @@
+# config/validator/validation.yaml
+App\Entity\Location:
+    properties:
+        city:
+            - NotBlank:
+                  message: 'Nazwa miasta jest wymagana'
+            - Length:
+                  max: 255
+                  maxMessage: 'Nazwa miasta nie może przekraczać {{ limit }} znaków'
+            - Type:
+                  type: string
+                  message: 'Nazwa miasta musi być tekstem'
+
+        country:
+            - NotBlank:
+                  message: 'Nazwa kraju jest wymagana'
+            - Length:
+                  max: 255
+                  maxMessage: 'Nazwa kraju nie może przekraczać {{ limit }} znaków'
+
+        latitude:
+            - NotBlank:
+                  message: 'Szerokość geograficzna jest wymagana'
+            - Type:
+                  type: string
+                  message: 'Szerokość geograficzna musi być liczbą'
+            - Regex:
+                  pattern: '/^-?[0-9]{1,3}(\.[0-9]{1,7})?$/'
+                  message: 'Szerokość geograficzna musi być w formacie -90.0000000 do 90.0000000'
+
+        longitude:
+            - NotBlank:
+                  message: 'Długość geograficzna jest wymagana'
+            - Type:
+                  type: string
+                  message: 'Długość geograficzna musi być liczbą'
+            - Regex:
+                  pattern: '/^-?[0-9]{1,3}(\.[0-9]{1,7})?$/'
+                  message: 'Długość geograficzna musi być w formacie -180.0000000 do 180.0000000'
+
+App\Entity\Measurement:
+    properties:
+        day:
+            - NotBlank:
+                  message: 'Data jest wymagana'
+            - Type:
+                  type: \DateTimeInterface
+                  message: 'Data musi być poprawną datą'
+
+        rainprob:
+            - NotBlank:
+                  message: 'Prawdopodobieństwo opadów jest wymagane'
+            - Range:
+                  min: 0
+                  max: 100
+                  notInRangeMessage: 'Prawdopodobieństwo opadów musi być między {{ min }}% a {{ max }}%'
+            - Regex:
+                  pattern: '/^[0-9]{1,3}$/'
+                  message: 'Prawdopodobieństwo opadów musi być liczbą całkowitą'
+
+        humidity:
+            - NotBlank:
+                  message: 'Wilgotność jest wymagana'
+            - Range:
+                  min: 0
+                  max: 100
+                  notInRangeMessage: 'Wilgotność musi być między {{ min }}% a {{ max }}%'
+            - Regex:
+                  pattern: '/^[0-9]{1,3}$/'
+                  message: 'Wilgotność musi być liczbą całkowitą'
+
+        celsius:
+            - NotBlank:
+                  message: 'Temperatura jest wymagana'
+            - Range:
+                  min: -100
+                  max: 100
+                  notInRangeMessage: 'Temperatura musi być między {{ min }}°C a {{ max }}°C'
+            - Regex:
+                  pattern: '/^-?[0-9]{1,3}$/'
+                  message: 'Temperatura musi być liczbą całkowitą'
+
+        wind:
+            - NotBlank:
+                  message: 'Prędkość wiatru jest wymagana'
+            - Range:
+                  min: 0
+                  max: 400
+                  notInRangeMessage: 'Prędkość wiatru musi być między {{ min }} km/h a {{ max }} km/h'
+            - Regex:
+                  pattern: '/^[0-9]{1,3}$/'
+                  message: 'Prędkość wiatru musi być liczbą całkowitą'
+
+        forecast:
+            - NotBlank:
+                  message: 'Prognoza jest wymagana'
+            - Length:
+                  max: 255
+                  maxMessage: 'Prognoza nie może przekraczać {{ limit }} znaków'
+            - Choice:
+                  choices: ['słonecznie', 'pochmurno', 'deszczowo', 'śnieg', 'burza', 'mgła']
+                  message: 'Wybierz poprawny typ pogody z dostępnych opcji'
