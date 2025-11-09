@@ -7,7 +7,9 @@
         <h1>Measurement index</h1>
         <div>
             <a href="{{ path('app_location_index') }}" class="btn btn-info">Go to Locations</a>
-            <a href="{{ path('app_measurement_new') }}" class="btn btn-success">Create new Measurement</a>
+            {% if is_granted('ROLE_MEASUREMENT_NEW') %}
+                <a href="{{ path('app_measurement_new') }}" class="btn btn-success">Create new Measurement</a>
+            {% endif %}
         </div>
     </div>
 
@@ -36,8 +38,12 @@
                 <td>{{ measurement.celsius }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a href="{{ path('app_measurement_show', {'id': measurement.id}) }}" class="btn btn-sm btn-outline-primary">show</a>
-                        <a href="{{ path('app_measurement_edit', {'id': measurement.id}) }}" class="btn btn-sm btn-outline-secondary">edit</a>
+                        {% if is_granted('ROLE_MEASUREMENT_SHOW') %}
+                            <a href="{{ path('app_measurement_show', {'id': measurement.id}) }}" class="btn btn-sm btn-outline-primary">show</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_MEASUREMENT_EDIT') %}
+                            <a href="{{ path('app_measurement_edit', {'id': measurement.id}) }}" class="btn btn-sm btn-outline-secondary">edit</a>
+                        {% endif %}
                     </div>
                 </td>
             </tr>
@@ -51,6 +57,8 @@
 
     <div class="mt-3">
         <a href="{{ path('app_location_index') }}" class="btn btn-info">Go to Locations</a>
-        <a href="{{ path('app_measurement_new') }}" class="btn btn-success">Create new Measurement</a>
+        {% if is_granted('ROLE_MEASUREMENT_NEW') %}
+            <a href="{{ path('app_measurement_new') }}" class="btn btn-success">Create new Measurement</a>
+        {% endif %}
     </div>
 {% endblock %}

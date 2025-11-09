@@ -7,7 +7,9 @@
         <h1>Location index</h1>
         <div>
             <a href="{{ path('app_measurement_index') }}" class="btn btn-info">Go to Measurements</a>
-            <a href="{{ path('app_location_new') }}" class="btn btn-success">Create new Location</a>
+            {% if is_granted('ROLE_LOCATION_NEW') %}
+                <a href="{{ path('app_location_new') }}" class="btn btn-success">Create new Location</a>
+            {% endif %}
         </div>
     </div>
 
@@ -32,8 +34,12 @@
                 <td>{{ location.country }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a href="{{ path('app_location_show', {'id': location.id}) }}" class="btn btn-sm btn-outline-primary">show</a>
-                        <a href="{{ path('app_location_edit', {'id': location.id}) }}" class="btn btn-sm btn-outline-secondary">edit</a>
+                        {% if is_granted('ROLE_LOCATION_SHOW') %}
+                            <a href="{{ path('app_location_show', {'id': location.id}) }}" class="btn btn-sm btn-outline-primary">show</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_LOCATION_EDIT') %}
+                            <a href="{{ path('app_location_edit', {'id': location.id}) }}" class="btn btn-sm btn-outline-secondary">edit</a>
+                        {% endif %}
                     </div>
                 </td>
             </tr>
@@ -47,6 +53,8 @@
 
     <div class="mt-3">
         <a href="{{ path('app_measurement_index') }}" class="btn btn-info">Go to Measurements</a>
-        <a href="{{ path('app_location_new') }}" class="btn btn-success">Create new Location</a>
+        {% if is_granted('ROLE_LOCATION_NEW') %}
+            <a href="{{ path('app_location_new') }}" class="btn btn-success">Create new Location</a>
+        {% endif %}
     </div>
 {% endblock %}

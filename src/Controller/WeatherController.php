@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 final class WeatherController extends AbstractController
 {
     #[Route('/weather/{city}-{country}', name: 'app_weather')]
+    #[IsGranted('ROLE_USER')]
     public function city(
         #[MapEntity(mapping: ['city' => 'city', 'country' => 'country'])]
         Location $location,
